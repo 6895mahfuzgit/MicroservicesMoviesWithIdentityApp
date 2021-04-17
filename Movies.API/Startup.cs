@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Movies.API.BaseRepository;
 using Movies.API.Context;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,9 @@ namespace Movies.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDBContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
