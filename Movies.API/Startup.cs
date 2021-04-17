@@ -1,19 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Movies.API.BaseRepository;
+using Movies.API.BaseRepository.BaseRepository;
 using Movies.API.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Movies.API.Repositories.EntityRepository;
 
 namespace Movies.API
 {
@@ -32,7 +26,8 @@ namespace Movies.API
             services.AddDbContext<ApplicationDBContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
+            services.AddScoped<IMovieRepository, MovieRepository>();
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

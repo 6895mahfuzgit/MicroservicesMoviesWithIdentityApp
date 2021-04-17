@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Movies.API.BaseRepository
+namespace Movies.API.BaseRepository.BaseRepository
 {
     public interface IRepository<T> where T : Entity
     {
