@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Movies.API.Models;
 using Movies.API.Repositories.EntityRepository;
@@ -11,6 +12,7 @@ namespace Movies.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MoviesController : ControllerBase
     {
         private readonly IMovieRepository _movieRepository;
@@ -26,7 +28,7 @@ namespace Movies.API.Controllers
             return Ok(await _movieRepository.GetAllAsync());
         }
 
-        
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovie(int id)
         {
@@ -40,7 +42,7 @@ namespace Movies.API.Controllers
             return movie;
         }
 
-        
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovie(int id, Movie movie)
         {
@@ -68,7 +70,7 @@ namespace Movies.API.Controllers
             return NoContent();
         }
 
-        
+
         [HttpPost]
         public async Task<ActionResult<Movie>> PostMovie(Movie movie)
         {
@@ -76,7 +78,7 @@ namespace Movies.API.Controllers
             return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
         }
 
-     
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<Movie>> DeleteMovie(int id)
         {
