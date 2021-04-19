@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Movies.Client.Models
 {
-    public class Movie //:Entity
+    public class Movie
     {
         public int Id { get; set; }
         public string Title { get; set; }
