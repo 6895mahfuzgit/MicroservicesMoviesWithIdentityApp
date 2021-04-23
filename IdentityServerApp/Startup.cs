@@ -20,7 +20,8 @@ namespace IdentityServerApp
                      //.AddInMemoryIdentityResources(Config.IdentityResources)
                      //.AddInMemoryApiResources(Config.ApiResources)
                      .AddInMemoryApiScopes(Config.ApiScopes)
-                     //.AddTestUsers(Config.TestUsers)
+                     .AddInMemoryIdentityResources(Config.IdentityResources)
+                     .AddTestUsers(Config.TestUsers)
                      .AddDeveloperSigningCredential();
 
 
