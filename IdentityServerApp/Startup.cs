@@ -12,6 +12,8 @@ namespace IdentityServerApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
+
             //for identity Server
             services.AddIdentityServer()
                      .AddInMemoryClients(Config.Clients)
@@ -32,17 +34,24 @@ namespace IdentityServerApp
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseRouting();
             //for identity Server
             app.UseIdentityServer();
+            app.UseAuthorization();
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapGet("/", async context =>
+            //    {
+            //        await context.Response.WriteAsync("Hello World!");
+            //    });
+            //});
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapDefaultControllerRoute();
             });
+
         }
     }
 }
