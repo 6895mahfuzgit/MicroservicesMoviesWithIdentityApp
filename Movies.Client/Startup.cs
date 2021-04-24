@@ -1,11 +1,16 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using IdentityModel.Client;
+using JWT.Builder;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using Movies.Client.ApiServices;
+using Movies.Client.HttpHandlers;
+using System;
 
 namespace Movies.Client
 {
@@ -41,6 +46,34 @@ namespace Movies.Client
                  options.SaveTokens = true;
                  options.GetClaimsFromUserInfoEndpoint = true;
              });
+
+
+            //Create Client
+            services.AddTransient<AuthenticationDelegateHandler>();
+            services.AddHttpClient("MovieAPIClient", client =>
+            {
+                client.BaseAddress = new Uri(Configuration.GetValue<string>("APIServer:ServerURL"));
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+
+            }).AddHttpMessageHandler<AuthenticationDelegateHandler>();
+
+            services.AddHttpClient("IDPClient", client =>
+            {
+                client.BaseAddress = new Uri(Configuration.GetValue<string>("IdentityServer:ServerURL"));
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+
+            });
+
+            services.AddSingleton(new ClientCredentialsTokenRequest
+            {
+                Address = $"{Configuration.GetValue<string>("IdentityServer:ServerURL")}/connect/token",
+                ClientId = "movieClient",
+                ClientSecret = Configuration.GetValue<string>("IdentityServer:ClientSecret"),
+                Scope = Configuration.GetValue<string>("IdentityServer:ScopeOption3")
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
