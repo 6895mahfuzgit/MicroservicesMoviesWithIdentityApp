@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Movies.API.Models;
@@ -28,6 +31,7 @@ namespace Movies.API.Controllers
             return Ok(await _movieRepository.GetAllAsync());
         }
 
+       
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovie(int id)
@@ -98,5 +102,8 @@ namespace Movies.API.Controllers
             var movie = _movieRepository.GetByIdAsync(id);
             return movie != null;
         }
+
+     
+     
     }
 }
