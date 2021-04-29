@@ -43,6 +43,7 @@ namespace Movies.Client
                  options.ResponseType = Configuration.GetValue<string>("IdentityServer:ResponseType");
                  options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption1"));
                  options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption2"));
+                 options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption3"));
                  options.SaveTokens = true;
                  options.GetClaimsFromUserInfoEndpoint = true;
              });
@@ -66,13 +67,14 @@ namespace Movies.Client
 
             });
 
-            services.AddSingleton(new ClientCredentialsTokenRequest
-            {
-                Address = $"{Configuration.GetValue<string>("IdentityServer:ServerURL")}/connect/token",
-                ClientId = "movieClient",
-                ClientSecret = Configuration.GetValue<string>("IdentityServer:ClientSecret"),
-                Scope = Configuration.GetValue<string>("IdentityServer:ScopeOption3")
-            });
+            services.AddHttpContextAccessor();
+            //services.AddSingleton(new ClientCredentialsTokenRequest
+            //{
+            //    Address = $"{Configuration.GetValue<string>("IdentityServer:ServerURL")}/connect/token",
+            //    ClientId = "movieClient",
+            //    ClientSecret = Configuration.GetValue<string>("IdentityServer:ClientSecret"),
+            //    Scope = Configuration.GetValue<string>("IdentityServer:ScopeOption3")
+            //});
 
         }
 

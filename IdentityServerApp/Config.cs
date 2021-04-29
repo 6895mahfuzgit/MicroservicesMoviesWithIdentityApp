@@ -13,18 +13,19 @@ namespace IdentityServerApp
     public class Config
     {
         public static IEnumerable<Client> Clients => new Client[] {
-             new Client{
-                  ClientId="movieClient",
-                  AllowedGrantTypes=GrantTypes.ClientCredentials,
-                  ClientSecrets={
-                     new Secret("supersecrate".Sha256())
-                   },
-                  AllowedScopes={ "movieAPI" }
-             },
+             //new Client{
+             //     ClientId="movieClient",
+             //     AllowedGrantTypes=GrantTypes.ClientCredentials,
+             //     ClientSecrets={
+             //        new Secret("supersecrate".Sha256())
+             //      },
+             //     AllowedScopes={ "movieAPI" }
+             //},
              new Client{
                   ClientId="movies_mvc_Client",
                   ClientName="Movies MVC Web Client",
-                  AllowedGrantTypes=GrantTypes.Code, //
+                  AllowedGrantTypes=GrantTypes.Hybrid, //
+                  RequirePkce=false,
                   AllowRememberConsent=false,
                   RedirectUris=new List<string>()
                   {
@@ -41,7 +42,8 @@ namespace IdentityServerApp
                   AllowedScopes=new List<string>()
                   {
                       IdentityServerConstants.StandardScopes.OpenId,
-                      IdentityServerConstants.StandardScopes.Profile
+                      IdentityServerConstants.StandardScopes.Profile,
+                      "movieAPI"
                   }
              }
 

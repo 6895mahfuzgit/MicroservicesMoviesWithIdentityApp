@@ -1,4 +1,7 @@
 ﻿using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,26 +13,42 @@ namespace Movies.Client.HttpHandlers
 {
     public class AuthenticationDelegateHandler : DelegatingHandler
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ClientCredentialsTokenRequest _clientCredentialsTokenRequest;
+        //private readonly IHttpClientFactory _httpClientFactory;
+        //private readonly ClientCredentialsTokenRequest _clientCredentialsTokenRequest;
 
-        public AuthenticationDelegateHandler(IHttpClientFactory httpClientFactory, ClientCredentialsTokenRequest clientCredentialsTokenRequest)
+        //public AuthenticationDelegateHandler(IHttpClientFactory httpClientFactory, ClientCredentialsTokenRequest clientCredentialsTokenRequest)
+        //{
+        //    _httpClientFactory = httpClientFactory;
+        //    _clientCredentialsTokenRequest = clientCredentialsTokenRequest;
+        //}
+
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public AuthenticationDelegateHandler(IHttpContextAccessor httpContextAccessor)
         {
-            _httpClientFactory = httpClientFactory;
-            _clientCredentialsTokenRequest = clientCredentialsTokenRequest;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var httpClient = _httpClientFactory.CreateClient("IDPClient");
-            var tokenResponse = await httpClient.RequestClientCredentialsTokenAsync(_clientCredentialsTokenRequest);
+            //var httpClient = _httpClientFactory.CreateClient("IDPClient");
+            //var tokenResponse = await httpClient.RequestClientCredentialsTokenAsync(_clientCredentialsTokenRequest);
 
-            if (tokenResponse.IsError)
+            //if (tokenResponse.IsError)
+            //{
+            //    throw new HttpRequestException("Seever Error while Creating Access Token.");
+            //}
+
+            //request.SetBearerToken(tokenResponse.AccessToken);
+
+            var accesstoken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+
+            if (!string.IsNullOrWhiteSpace(accesstoken))
             {
-                throw new HttpRequestException("Seever Error while Creating Access Token.");
+                request.SetBearerToken(accesstoken);
             }
 
-            request.SetBearerToken(tokenResponse.AccessToken);
             return await base.SendAsync(request, cancellationToken);
         }
     }
