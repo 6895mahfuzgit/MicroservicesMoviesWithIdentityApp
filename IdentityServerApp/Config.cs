@@ -45,7 +45,8 @@ namespace IdentityServerApp
                       IdentityServerConstants.StandardScopes.Profile,
                       IdentityServerConstants.StandardScopes.Address,
                       IdentityServerConstants.StandardScopes.Email,
-                      "movieAPI"
+                      "movieAPI",
+                      "roles",
                   }
              }
 
@@ -63,6 +64,7 @@ namespace IdentityServerApp
             new IdentityResources.Profile(),
             new IdentityResources.Address(),
             new IdentityResources.Email(),
+            new IdentityResource("roles","My Roles",new List<string>{ "role"}),
         };
 
         public static List<TestUser> TestUsers => new List<TestUser>

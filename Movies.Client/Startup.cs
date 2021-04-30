@@ -1,5 +1,7 @@
-﻿using IdentityModel.Client;
+﻿using IdentityModel;
+using IdentityModel.Client;
 using JWT.Builder;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -41,13 +43,22 @@ namespace Movies.Client
                  options.ClientId = Configuration.GetValue<string>("IdentityServer:ClientId");
                  options.ClientSecret = Configuration.GetValue<string>("IdentityServer:ClientSecret");
                  options.ResponseType = Configuration.GetValue<string>("IdentityServer:ResponseType");
-                // options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption1"));
+                 // options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption1"));
                  //options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption2"));
                  options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption3"));
                  options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption4"));
                  options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption5"));
+                 options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption6"));
+
+                 options.ClaimActions.MapUniqueJsonKey("role","role");
                  options.SaveTokens = true;
                  options.GetClaimsFromUserInfoEndpoint = true;
+
+                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                 {
+                     NameClaimType = JwtClaimTypes.GivenName,
+                     RoleClaimType = JwtClaimTypes.Role
+                 };
              });
 
 
