@@ -41,9 +41,11 @@ namespace Movies.Client
                  options.ClientId = Configuration.GetValue<string>("IdentityServer:ClientId");
                  options.ClientSecret = Configuration.GetValue<string>("IdentityServer:ClientSecret");
                  options.ResponseType = Configuration.GetValue<string>("IdentityServer:ResponseType");
-                 options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption1"));
-                 options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption2"));
+                // options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption1"));
+                 //options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption2"));
                  options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption3"));
+                 options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption4"));
+                 options.Scope.Add(Configuration.GetValue<string>("IdentityServer:ScopeOption5"));
                  options.SaveTokens = true;
                  options.GetClaimsFromUserInfoEndpoint = true;
              });
