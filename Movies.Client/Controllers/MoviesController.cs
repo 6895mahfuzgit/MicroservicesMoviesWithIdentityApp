@@ -23,6 +23,20 @@ namespace Movies.Client.Controllers
         }
 
 
+        public async Task<IActionResult> OnlyAdmin()
+        {
+            try
+            {
+                var userInfomation = await _movieApiService.GetUserInformation();
+                return View(userInfomation);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
 
         // GET: Movies
         public async Task<IActionResult> Index()
