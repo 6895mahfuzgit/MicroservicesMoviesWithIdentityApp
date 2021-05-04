@@ -6,11 +6,15 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port":"5001"
+          "Port": "5001"
         }
       ],
       "UpstreamPathTemplate": "/movies",
-      "UpstreamHttpMethod": [ "GET","PUT", "POST" ]
+      "UpstreamHttpMethod": [ "GET", "PUT", "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     }
 
   ]
