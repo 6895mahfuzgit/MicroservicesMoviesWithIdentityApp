@@ -28,28 +28,28 @@ namespace IdentityServerApp
             services.AddControllersWithViews();
 
             //for identity Server
-            //services.AddIdentityServer()
-            //         .AddInMemoryClients(Config.Clients)
-            //         //.AddInMemoryIdentityResources(Config.IdentityResources)
-            //         //.AddInMemoryApiResources(Config.ApiResources)
-            //         .AddInMemoryApiScopes(Config.ApiScopes)
-            //         .AddInMemoryIdentityResources(Config.IdentityResources)
-            //        //.AddTestUsers(Config.TestUsers)
-            //        .AddTestUsers(TestUsers.Users)
-            //         .AddDeveloperSigningCredential();
-            var migrationsAssembly = typeof(Startup).Assembly.GetName().Name;
             services.AddIdentityServer()
+                     .AddInMemoryClients(Config.Clients)
+                     //.AddInMemoryIdentityResources(Config.IdentityResources)
+                     //.AddInMemoryApiResources(Config.ApiResources)
+                     .AddInMemoryApiScopes(Config.ApiScopes)
+                     .AddInMemoryIdentityResources(Config.IdentityResources)
+                    //.AddTestUsers(Config.TestUsers)
                     .AddTestUsers(TestUsers.Users)
-                    .AddConfigurationStore(options =>
-                        {
-                            options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                                sql => sql.MigrationsAssembly(migrationsAssembly));
-                        })
-                  .AddOperationalStore(options =>
-                        {
-                            options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                                sql => sql.MigrationsAssembly(migrationsAssembly));
-                        });
+                     .AddDeveloperSigningCredential();
+            //var migrationsAssembly = typeof(Startup).Assembly.GetName().Name;
+            //services.AddIdentityServer()
+            //        .AddTestUsers(TestUsers.Users)
+            //        .AddConfigurationStore(options =>
+            //            {
+            //                options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+            //                    sql => sql.MigrationsAssembly(migrationsAssembly));
+            //            })
+            //      .AddOperationalStore(options =>
+            //            {
+            //                options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+            //                    sql => sql.MigrationsAssembly(migrationsAssembly));
+            //            });
 
 
         }
@@ -61,7 +61,7 @@ namespace IdentityServerApp
             {
                 app.UseDeveloperExceptionPage();
             }
-            InitializeDatabase(app);
+            //InitializeDatabase(app);
             app.UseStaticFiles();
             app.UseRouting();
             //for identity Server

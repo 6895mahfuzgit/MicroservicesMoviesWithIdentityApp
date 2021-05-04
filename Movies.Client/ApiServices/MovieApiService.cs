@@ -31,7 +31,7 @@ namespace Movies.Client.ApiServices
             try
             {
                 var httpClient = _httpClinetFactory.CreateClient("MovieAPIClient");
-                var request = new HttpRequestMessage(HttpMethod.Post, "/api/Movies");
+                var request = new HttpRequestMessage(HttpMethod.Post, "/Movies");
                 var movieJson = JsonConvert.SerializeObject(movie);
                 request.Content = new StringContent(movieJson, Encoding.UTF8, "application/json");
                 var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
@@ -53,7 +53,7 @@ namespace Movies.Client.ApiServices
             try
             {
                 var httpClient = _httpClinetFactory.CreateClient("MovieAPIClient");
-                var request = new HttpRequestMessage(HttpMethod.Delete, $"/api/Movies/{id}");
+                var request = new HttpRequestMessage(HttpMethod.Delete, $"/Movies/{id}");
                 var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                                                         .ConfigureAwait(false);
 
@@ -71,7 +71,7 @@ namespace Movies.Client.ApiServices
             try
             {
                 var httpClient = _httpClinetFactory.CreateClient("MovieAPIClient");
-                var request = new HttpRequestMessage(HttpMethod.Get, $"/api/Movies/{id}");
+                var request = new HttpRequestMessage(HttpMethod.Get, $"/Movies/{id}");
                 var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                                                         .ConfigureAwait(false);
 
@@ -93,7 +93,7 @@ namespace Movies.Client.ApiServices
             try
             {
                 var httpClient = _httpClinetFactory.CreateClient("MovieAPIClient");
-                var request = new HttpRequestMessage(HttpMethod.Get, "/api/Movies");
+                var request = new HttpRequestMessage(HttpMethod.Get, "/Movies");
                 var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                                                         .ConfigureAwait(false);
 
@@ -198,7 +198,7 @@ namespace Movies.Client.ApiServices
             try
             {
                 var httpClient = _httpClinetFactory.CreateClient("MovieAPIClient");
-                var request = new HttpRequestMessage(HttpMethod.Put, $"/api/Movies/{movie.Id}");
+                var request = new HttpRequestMessage(HttpMethod.Put, $"Movies/{movie.Id}");
                 var movieJson = JsonConvert.SerializeObject(movie);
                 request.Content = new StringContent(movieJson, Encoding.UTF8, "application/json");
                 var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
